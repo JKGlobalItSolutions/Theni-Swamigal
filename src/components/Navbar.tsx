@@ -23,7 +23,7 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-3">
             <span className="text-2xl">🕉️</span>
             <span className="font-heading text-xl md:text-2xl font-bold text-gradient-gold">
-              Theni Swamigal
+              Sri Theni Swamigal
             </span>
           </Link>
 

@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import heroImage from "@/assets/hero-ashram.jpg";
-import meditationImage from "@/assets/meditation.jpg";
-import satsangImage from "@/assets/satsang.jpg";
-import annadhanamImage from "@/assets/annadhanam.jpg";
+import heroImage from "@/assets/hero-ashram.jpeg";
+import meditationImage from "@/assets/meditation.jpeg";
+import quote3 from "@/assets/quote3.jpeg";
+import annadhanamImage from "@/assets/annadhanam.jpeg";
 
 const images = [
   { src: heroImage, alt: "Ashram Campus" },
   { src: meditationImage, alt: "Meditation Session" },
-  { src: satsangImage, alt: "Satsang Gathering" },
+  { src: quote3, alt: "Satsang Gathering" },
   { src: annadhanamImage, alt: "Annadhanam Service" },
 ];
 

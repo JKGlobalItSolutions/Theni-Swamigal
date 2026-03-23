@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send, Heart, QrCode, CheckCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,14 @@ const Contact = () => {
     message: "",
   });
 
+  // Donation state
+  const [isDonationOpen, setIsDonationOpen] = useState(false);
+  const [selectedAmount, setSelectedAmount] = useState(0);
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [isPaymentComplete, setIsPaymentComplete] = useState(false);
+  const [donorName, setDonorName] = useState("");
+  const [donorPhone, setDonorPhone] = useState("");
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
@@ -19,6 +28,43 @@ const Contact = () => {
       description: "Thank you for reaching out. We will get back to you soon.",
     });
     setFormData({ name: "", email: "", subject: "", message: "" });
+  };
+
+  const handleDonationSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsDonationOpen(true);
+  };
+
+  const handleDonateAmount = (amount: number) => {
+    setSelectedAmount(amount);
+    setIsPaymentOpen(true);
+  };
+
+  const handlePaymentComplete = () => {
+    setIsPaymentOpen(false);
+    setIsPaymentComplete(true);
+    toast({
+      title: "Payment Successful",
+      description: "Thank you for your donation! Details sent to WhatsApp.",
+    });
+    // Send to WhatsApp (this would need actual integration)
+    console.log("Sending to WhatsApp:", {
+      name: donorName,
+      phone: donorPhone,
+      amount: selectedAmount,
+    });
+  };
+
+  const handlePaymentCancel = () => {
+    setIsPaymentOpen(false);
+    setSelectedAmount(0);
+  };
+
+  const handlePaymentClose = () => {
+    setIsPaymentComplete(false);
+    setSelectedAmount(0);
+    setDonorName("");
+    setDonorPhone("");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -41,6 +87,33 @@ const Contact = () => {
             <p className="text-secondary-foreground/80 max-w-2xl mx-auto text-lg">
               We welcome all seekers. Reach out to us for any inquiries or to plan your visit.
             </p>
+          </div>
+        </section>
+
+        {/* Donation Section */}
+        <section className="section-padding bg-background">
+          <div className="container-custom">
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-white rounded-2xl shadow-sm border border-border/50 p-8">
+                <div className="flex items-center gap-4">
+                  <Heart className="w-8 h-8 text-primary" />
+                  <div>
+                    <h2 className="font-heading text-2xl font-bold text-foreground mb-2">
+                      Support Our Cause
+                    </h2>
+                    <p className="text-muted-foreground text-sm">
+                      Your generous donations help us continue our spiritual services and community support.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleDonationSubmit}
+                  className="mt-6 w-full bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all"
+                >
+                  Donate Now
+                </button>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -195,6 +268,126 @@ const Contact = () => {
             </div>
           </div>
         </section>
+
+        {/* Donation Amount Selection */}
+        {isDonationOpen && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl p-8 max-w-md w-full">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-6">
+                Select Donation Amount
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { amount: 100, label: "₹100" },
+                  { amount: 500, label: "₹500" },
+                  { amount: 1000, label: "₹1000" },
+                  { amount: 2000, label: "₹2000" },
+                  { amount: 5000, label: "₹5000" },
+                  { amount: 10000, label: "₹10000" },
+                ].map((item) => (
+                  <button
+                    key={item.amount}
+                    onClick={() => handleDonateAmount(item.amount)}
+                    className="w-full flex items-center justify-between p-4 bg-card rounded-lg border border-border hover:bg-primary/10 transition-all"
+                  >
+                    <span className="font-semibold text-foreground">{item.label}</span>
+                    <div className="flex items-center gap-2">
+                      <Heart className="w-4 h-4 text-primary" />
+                      <span className="text-primary font-semibold">Donate</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => setIsDonationOpen(false)}
+                className="mt-6 w-full bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-secondary/90 transition-all"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Payment Section */}
+        {isPaymentOpen && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl p-8 max-w-md w-full">
+              <h3 className="font-heading text-xl font-bold text-foreground mb-6">
+                Complete Payment
+              </h3>
+              <div className="text-center mb-6">
+                <QrCode className="w-24 h-24 mx-auto mb-4" />
+                <p className="text-sm text-muted-foreground">
+                  Scan QR Code to pay ₹{selectedAmount}
+                </p>
+                <p className="text-xs text-muted-foreground mt-2">
+                  (UPI / Google Pay / PhonePe / Paytm)
+                </p>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    value={donorName}
+                    onChange={(e) => setDonorName(e.target.value)}
+                    className="w-full px-4 py-3 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    placeholder="Enter your name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    value={donorPhone}
+                    onChange={(e) => setDonorPhone(e.target.value)}
+                    className="w-full px-4 py-3 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    placeholder="Enter phone number"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-4 mt-6">
+                <button
+                  onClick={handlePaymentCancel}
+                  className="flex-1 bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-secondary/90 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handlePaymentComplete}
+                  className="flex-1 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all"
+                >
+                  Confirm Payment
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Payment Complete */}
+        {isPaymentComplete && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl p-8 max-w-md w-full text-center">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+              <h3 className="font-heading text-xl font-bold text-foreground mb-4">
+                Thank You!
+              </h3>
+              <p className="text-muted-foreground mb-6">
+                Your donation of ₹{selectedAmount} has been received. We will send a confirmation to your WhatsApp.
+              </p>
+              <button
+                onClick={handlePaymentClose}
+                className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        )}
       </main>
       <Footer />
     </div>

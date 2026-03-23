@@ -28,7 +28,7 @@ const ContactPreview = () => {
               <h3 className="font-heading text-lg font-semibold text-foreground mb-2">
                 Phone
               </h3>
-              <p className="text-muted-foreground text-sm">+91 ————</p>
+              <p className="text-muted-foreground text-sm">8120831076</p>
             </div>
             <div className="p-6 bg-background rounded-xl border border-border/50">
               <Mail className="w-8 h-8 text-primary mx-auto mb-4" />

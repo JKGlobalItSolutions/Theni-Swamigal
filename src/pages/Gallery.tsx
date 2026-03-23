@@ -1,9 +1,12 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import heroImage from "@/assets/hero-ashram.jpg";
-import meditationImage from "@/assets/meditation.jpg";
-import satsangImage from "@/assets/satsang.jpg";
-import annadhanamImage from "@/assets/annadhanam.jpg";
+import heroImage from "@/assets/hero-ashram.jpeg";
+import meditationImage from "@/assets/meditation.jpeg";
+import satsangImage from "@/assets/satsang.jpeg";
+import annadhanamImage from "@/assets/annadhanam.jpeg";
+import quote1  from "@/assets/quote1.jpeg"
+import quote2 from "@/assets/quote2.jpeg";
+import quote3 from "@/assets/quote3.jpeg";
 
 const galleryCategories = [
   {
@@ -31,6 +34,9 @@ const allImages = [
   { src: annadhanamImage, alt: "Annadhanam Service" },
   { src: heroImage, alt: "Temple Gardens" },
   { src: satsangImage, alt: "Festival Celebration" },
+  { src: quote1, alt: "Spiritual Gathering" },
+  { src: quote2, alt: "Ashram Entrance" },
+  { src: quote3, alt: "Temple Architecture" },
 ];
 
 const Gallery = () => {
