@@ -51,7 +51,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3 text-sm text-secondary-foreground/80">
                 <Phone size={18} className="shrink-0 text-primary" />
-                <span>+91 ————</span>
+                <span>81208 31076</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-secondary-foreground/80">
                 <Mail size={18} className="shrink-0 text-primary" />
@@ -60,16 +60,30 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Visiting Hours */}
+{/* Ashram Timings */}
           <div>
             <h4 className="font-heading text-lg font-semibold mb-4 text-primary-foreground">
-              Visiting Hours
+              Ashram Timings
             </h4>
-            <div className="flex items-start gap-3 text-sm text-secondary-foreground/80">
-              <Clock size={18} className="shrink-0 mt-0.5 text-primary" />
-              <div>
-                <p>Daily: 7:00 AM – 6:00 PM</p>
-                <p className="mt-1">Open for all seekers</p>
+            <div className="space-y-3 text-sm text-secondary-foreground/80">
+              <div className="flex items-start gap-3">
+                <Clock size={18} className="shrink-0 mt-0.5 text-primary" />
+                <div>
+                  <p className="font-medium">Opening Time</p>
+                  <p>6:00 AM – 7:00 PM</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Clock size={18} className="shrink-0 mt-0.5 text-primary" />
+                <div>
+                  <p className="font-medium">Pooja Timings</p>
+                  <p className="space-y-1">
+                    <span className="font-medium"></span> 7:00 AM – 7:00 PM
+                  </p>
+                  {/* <p className="space-y-1">
+                    <span className="font-medium">Evening:</span> 6:00 PM – 7:30 PM
+                  </p> */}
+                </div>
               </div>
             </div>
           </div>
